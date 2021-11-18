@@ -1,5 +1,7 @@
 using HotelListingAPI.Configurations;
 using HotelListingAPI.Data;
+using HotelListingAPI.IRepository;
+using HotelListingAPI.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -42,6 +44,12 @@ namespace HotelListingAPI
 
             services.AddAutoMapper(typeof(MapperInitilizer));
 
+            // transient = every time it is needed, a new instance is created
+            // scoped = lifetime of request
+            // only 1 will exist for entire duration of app
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListingAPI", Version = "v1" });
@@ -72,7 +80,7 @@ namespace HotelListingAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+               endpoints.MapControllers();
             });
         }
     }
