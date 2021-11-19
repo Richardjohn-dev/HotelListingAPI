@@ -35,6 +35,10 @@ namespace HotelListingAPI
                 options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
             );
 
+            //Setup Identity Core Services
+            services.AddAuthentication();
+            services.CustomConfigureIdentity();
+
             services.AddCors(c => {
                 c.AddPolicy("CorsAllowAllPolicy", builder =>
                 builder.AllowAnyOrigin()
