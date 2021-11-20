@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelListingAPI.Migrations
 {
-    public partial class addedIdentity : Migration
+    public partial class AddedIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

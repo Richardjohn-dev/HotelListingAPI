@@ -23,29 +23,29 @@ namespace HotelListingAPI.Configurations.Entities
                    Rating = 4.5
                },
                new Hotel
-                 {
-                     Id = 2,
-                     Name = "The Green Resort",
-                     Address = "Koh Chang..",
-                     CountryId = 3,
-                     Rating = 4
-                 },
+               {
+                   Id = 2,
+                   Name = "The Green Resort",
+                   Address = "Koh Chang..",
+                   CountryId = 3,
+                   Rating = 4
+               },
                new Hotel
-                 {
-                     Id = 3,
-                     Name = "Airport Hotel",
-                     Address = "Suvarnibhumi",
-                     CountryId = 3,
-                     Rating = 3.5
-                 },
+               {
+                   Id = 3,
+                   Name = "Airport Hotel",
+                   Address = "Suvarnibhumi",
+                   CountryId = 3,
+                   Rating = 3.5
+               },
                new Hotel
-                {
-                    Id = 4,
-                    Name = "Premier Inn",
-                    Address = "Manchester",
-                    CountryId = 2,
-                    Rating = 3
-                }
+               {
+                   Id = 4,
+                   Name = "Premier Inn",
+                   Address = "Manchester",
+                   CountryId = 2,
+                   Rating = 3
+               }
              );
         }
     }

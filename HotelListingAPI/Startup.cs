@@ -2,6 +2,7 @@ using HotelListingAPI.Configurations;
 using HotelListingAPI.Data;
 using HotelListingAPI.IRepository;
 using HotelListingAPI.Repository;
+using HotelListingAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +39,7 @@ namespace HotelListingAPI
             //Setup Identity Core Services
             services.AddAuthentication();
             services.CustomConfigureIdentity();
+            services.ConfigureJWT(Configuration);
 
             services.AddCors(c => {
                 c.AddPolicy("CorsAllowAllPolicy", builder =>
@@ -53,6 +55,7 @@ namespace HotelListingAPI
             // only 1 will exist for entire duration of app
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthManager, AuthManager>();
 
             services.AddSwaggerGen(c =>
             {
@@ -80,6 +83,8 @@ namespace HotelListingAPI
             app.UseCors("CorsAllowAllPolicy");
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

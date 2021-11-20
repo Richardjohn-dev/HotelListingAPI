@@ -11,7 +11,7 @@ namespace HotelListingAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20211119052112_addedIdentity")]
-    partial class addedIdentity
+    partial class AddedIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

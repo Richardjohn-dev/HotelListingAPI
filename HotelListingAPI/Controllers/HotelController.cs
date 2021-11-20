@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HotelListingAPI.DTOs;
 using HotelListingAPI.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,7 +27,7 @@ namespace HotelListingAPI.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-      
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -40,11 +41,12 @@ namespace HotelListingAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(GetHotels)}");
-                return StatusCode(500, "Internal server error. Please try again later.");
+                _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetHotels)}");
+                return StatusCode(500, "Internal Server Error. Please Try Again Later.");
             }
         }
 
+       
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -52,14 +54,14 @@ namespace HotelListingAPI.Controllers
         {
             try
             {
-                var hotel = await _unitOfWork.Hotels.Get(h => h.Id == id, new List<string> { "Country" });
+                var hotel = await _unitOfWork.Hotels.Get(q => q.Id == id, new List<string> { "Country" });
                 var result = _mapper.Map<HotelDTO>(hotel);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Something went wrong in the {nameof(GetHotel)}");
-                return StatusCode(500, "Internal server error. Please try again later.");
+                _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetHotel)}");
+                return StatusCode(500, "Internal Server Error. Please Try Again Later.");
             }
         }
 
