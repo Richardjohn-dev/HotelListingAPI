@@ -22,37 +22,12 @@ namespace HotelListingAPI
             builder.AddEntityFrameworkStores<DatabaseContext>().AddDefaultTokenProviders();
         }
 
-        //public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
-        //{
-        //    var jwtSettings = configuration.GetSection("Jwt");
-        //    var key = Environment.GetEnvironmentVariable("KEY"); // dont store this key in appSettings
-        //    // what we set in command prompt 'setx KEY "5c0de99a-32fd-4c0d-b13f-c67c68697df0" /M
-
-        //    services.AddAuthentication(opt =>
-        //    {
-        //        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // Added auth to application, default scheme I want is Jwt.
-        //        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        //    })
-        //    .AddJwtBearer(o =>
-        //    {
-        //        o.TokenValidationParameters = new TokenValidationParameters
-        //        {
-        //            // parameters we want to use to validate that this token should grant someone access
-        //            ValidateIssuer = true, // is this "HotelListingAPI"?
-        //            ValidateLifetime = true, // is it expired?
-        //            ValidateIssuerSigningKey = true, // the KEY above is correct?
-        //            ValidIssuer = jwtSettings.GetSection("Issuer").Value, // defined in our appSettings
-        //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)) // gets encoded + hashed
-        //        };
-        //    });
-
-
-        //}
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration Configuration)
         {
             var jwtSettings = Configuration.GetSection("Jwt");
             // var key = Environment.GetEnvironmentVariable("KEY");
-            var key = jwtSettings.GetSection("dontStoreKeysLikeThis").Value;
+            var key = jwtSettings.GetSection("dontStoreKeysLikeThis").Value; 
+            // stored in config as envrionment variable not working atm..
 
             services.AddAuthentication(o =>
             {

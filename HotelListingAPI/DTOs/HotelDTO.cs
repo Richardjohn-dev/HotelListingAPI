@@ -22,7 +22,7 @@ namespace HotelListingAPI.DTOs
         [Range(1,5)]
         public double Rating { get; set; }
 
-        [Required]
+       // [Required]
         public int CountryId { get; set; }
     }
 
@@ -32,5 +32,8 @@ namespace HotelListingAPI.DTOs
         public CountryDTO Country { get; set; }
     }
 
-
+    public class UpdateHotelDTO : CreateHotelDTO
+    {
+        // just to make things clean in the controller..
+    }
 }
