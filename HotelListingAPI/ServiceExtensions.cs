@@ -1,4 +1,5 @@
-﻿using HotelListingAPI.Data;
+﻿using AspNetCoreRateLimit;
+using HotelListingAPI.Data;
 using HotelListingAPI.Models;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -104,6 +105,27 @@ namespace HotelListingAPI
                     validationOpt.MustRevalidate = true;
                 }
             );
+        }
+
+        public static void ConfigureRateLimiting(this IServiceCollection services)
+        {
+            var rateLimitRules = new List<RateLimitRule>
+            {
+                new RateLimitRule
+                {
+                    Endpoint = "*", // global rule
+                    Limit= 1,
+                    Period = "5s"
+                }
+            };
+            services.Configure<IpRateLimitOptions>(opt =>
+            {
+                opt.GeneralRules = rateLimitRules;
+            });
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+            services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
         }
     }
 }
