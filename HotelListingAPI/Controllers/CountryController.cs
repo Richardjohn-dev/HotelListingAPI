@@ -30,6 +30,9 @@ namespace HotelListingAPI.Controllers
         }
 
         [HttpGet]
+        // Can be used to override global caching on a particular endpoint at any point. 
+        ////[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        ////[HttpCacheValidation(MustRevalidate = false)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCountries([FromQuery] RequestParams requestParams)

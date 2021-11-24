@@ -37,6 +37,8 @@ namespace HotelListingAPI
             );
 
             //Setup Identity Core Services
+            services.ConfigureHttpCacheHeaders(); 
+
             services.AddAuthentication();
             services.CustomConfigureIdentity();
             services.ConfigureJWT(Configuration);
@@ -62,8 +64,17 @@ namespace HotelListingAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListingAPI", Version = "v1" });
             });
 
-            services.AddControllers()
-                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddControllers(config => {
+                config.CacheProfiles.Add("Cache120s", new CacheProfile 
+                    {
+                        Duration = 120 
+                    });
+                })
+                .AddNewtonsoftJson(opt => 
+                     opt.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.ConfigureVersioning();
 
         }
 
@@ -83,6 +94,9 @@ namespace HotelListingAPI
             app.UseHttpsRedirection();
 
             app.UseCors("CorsAllowAllPolicy");
+
+            app.UseResponseCaching();
+            app.UseHttpCacheHeaders();
 
             app.UseRouting();
 
